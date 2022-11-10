@@ -1,9 +1,10 @@
-import { Member } from "../dto";
-import MemoryMap from "./io/MemoryMap";
-import MemberStore from "./MemberStore";
+import { Member } from "../../dto";
+import MemberStore from "../store/MemberStore";
+import { MemoryMap } from "./io";
 
 class MemberMapStore implements MemberStore {
   memberMap: Map<string, Member>;
+  static instance: MemberMapStore;
 
   constructor() {
     this.memberMap = MemoryMap.getInstance().memberMap;
@@ -26,12 +27,16 @@ class MemberMapStore implements MemberStore {
   }
 
   login(id: string, password: string): Member | undefined {
-    return this.search(id);
+    if (this.search(id)?.password === password) {
+      return this.search(id);
+    }
   }
 }
 
 const member = new Member("a", "b", "c", "d");
 
 new MemberMapStore().regist(member);
+
+MemberMapStore.instance = new MemberMapStore();
 
 export default MemberMapStore;

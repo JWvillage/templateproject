@@ -1,4 +1,4 @@
-import { Member } from "../dto";
+import { Member } from "../../dto";
 
 interface MemberStore {
   regist(member: Member): void;

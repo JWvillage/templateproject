@@ -1,4 +1,4 @@
-import { Member } from "../../dto";
+import { Member } from "../../../dto";
 
 class MemoryMap {
   private static uniqueInstance: MemoryMap;

@@ -1,21 +1,20 @@
 import React from "react";
-import { Member } from "../../../mapstore";
-import MemberMapStore from "../../../mapstore/map/MemberMapStore";
 import { Login } from "../../api";
 import { Main } from "../../view";
+import { useNavigate } from "react-router-dom";
+import { Member } from "../../../store";
 
 const LoginView = () => {
-  const [member, setMember] = React.useState({
-    id: "",
-    password: "",
-    name: "",
-    type: "",
-  });
+  const navigate = useNavigate();
+
+  const m = new Member("", "", "", "");
+
+  const [member, setMember] = React.useState(m);
 
   const loginHandle = (event: any) => {
-    if (event.target.name == "userId") {
+    if (event.target.name === "userId") {
       member.id = event.target.value.toString();
-    } else if (event.target.name == "userPass") {
+    } else if (event.target.name === "userPass") {
       member.password = event.target.value.toString();
     }
 
@@ -28,15 +27,18 @@ const LoginView = () => {
     const loginMember = Login.instance.memberLogin(member.id, member.password);
     if (loginMember) {
       setLoginSucc("Succ");
-      setMember(loginMember);
+      // setMember(loginMember);
+      sessionStorage.setItem("loginId", JSON.stringify(loginMember));
+      navigate("/");
     } else {
+      alert("No such Id or Password");
       setMember({ ...member, id: "", password: "" });
     }
   };
 
   return (
     <>
-      {loginSucc == "" ? (
+      {loginSucc === "" ? (
         <div>
           <input
             type="text"
@@ -55,9 +57,17 @@ const LoginView = () => {
           <button type="button" name="loginBtn" onClick={loginCheck}>
             Login
           </button>
+          <button
+            type="button"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Main
+          </button>
         </div>
       ) : (
-        <Main member={member} />
+        <Main />
       )}
     </>
   );

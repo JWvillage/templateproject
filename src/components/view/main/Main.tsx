@@ -1,26 +1,32 @@
-import React from "react";
-import { Member } from "../../../mapstore";
+import { MainBar, ScrollTop } from "../../../share";
 
-interface Props {
-  member: Member | undefined;
-}
+const Main = () => {
+  const loginMember = sessionStorage.getItem("loginId");
 
-const Main: React.FC<Props> = ({ member }) => {
+  let member = null;
+  if (loginMember !== null) {
+    member = JSON.parse(loginMember);
+  }
+
+  console.log("login : ", member);
   return (
     <>
-      {member != undefined ? (
-        <div>
-          <h1>Here is Main Page</h1>
+      <MainBar />
+      <h1>Here is Main Page</h1>
+      {member !== null ? (
+        <>
           <ul>
             <li>Id : {member.id}</li>
-            <li>Password :{member.password}</li>
+            <li>Password : {member.password}</li>
             <li>Name : {member.name}</li>
+            <li>Address : {member.address}</li>
             <li>Type : {member.type}</li>
           </ul>
-        </div>
+        </>
       ) : (
-        <Main member={undefined} />
+        ""
       )}
+      <ScrollTop />
     </>
   );
 };

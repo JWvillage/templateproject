@@ -1,15 +1,22 @@
 import React from "react";
 import "./App.css";
-import { LoginView } from "./components";
+import { LoginView, Main, RegistView } from "./components";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  React.useEffect(() => {
-  }, []);
+  React.useEffect(() => {}, []);
 
   return (
-    <div className="App">
-      <LoginView />
-    </div>
+    // <>
+    //   <LoginView />
+    // </>
+    <BrowserRouter>
+      <Routes>
+        <Route path={"/"} element={<Main />} />
+        <Route path={"/login"} element={<LoginView />} />
+        <Route path={"/regist"} element={<RegistView />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

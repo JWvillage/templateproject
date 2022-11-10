@@ -1,1 +1,2 @@
-export { default as Login } from "./LoginApi";
+export { default as Login } from "./MemberLogin";
+export { default as Regist } from "./MemberRegist";
