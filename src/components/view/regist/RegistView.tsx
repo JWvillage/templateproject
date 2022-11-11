@@ -29,33 +29,36 @@ const RegistView = () => {
         setMember({ ...member, address: value });
         break;
     }
-    console.log(member);
   };
 
   return (
     <div>
       <h1>Here is RegistView</h1>
       <table>
-        <tr>
-          <th>id</th>
-          <th>password</th>
-          <th>name</th>
-          <th>address</th>
-        </tr>
-        <tr>
-          <td>
-            <input type="text" name="m_id" onChange={changeMember} />
-          </td>
-          <td>
-            <input type="password" name="m_pass" onChange={changeMember} />
-          </td>
-          <td>
-            <input type="text" name="m_name" onChange={changeMember} />
-          </td>
-          <td>
-            <input type="text" name="m_address" onChange={changeMember} />
-          </td>
-        </tr>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>password</th>
+            <th>name</th>
+            <th>address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input type="text" name="m_id" onChange={changeMember} />
+            </td>
+            <td>
+              <input type="password" name="m_pass" onChange={changeMember} />
+            </td>
+            <td>
+              <input type="text" name="m_name" onChange={changeMember} />
+            </td>
+            <td>
+              <input type="text" name="m_address" onChange={changeMember} />
+            </td>
+          </tr>
+        </tbody>
       </table>
       <button
         onClick={() => {

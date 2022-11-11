@@ -7,9 +7,6 @@ function App() {
   React.useEffect(() => {}, []);
 
   return (
-    // <>
-    //   <LoginView />
-    // </>
     <BrowserRouter>
       <Routes>
         <Route path={"/"} element={<Main />} />

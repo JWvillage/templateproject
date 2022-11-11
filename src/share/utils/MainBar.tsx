@@ -6,20 +6,20 @@ const MainBar = () => {
   return (
     <>
       {sessionStorage.getItem("loginId") !== null ? (
-        <>
-          <h1>Logout</h1>
+        <div style={{display: "flex", flexDirection: "column"}}>
+          <h3>Logout</h3>
           <button
             onClick={() => {
               sessionStorage.removeItem("loginId");
-              navigate("/");
+              navigate("/", { state: { newLogin: "logout" } });
             }}
           >
             Logout
           </button>
-        </>
+        </div>
       ) : (
-        <>
-          <h1>Not Login</h1>
+        <div style={{display: "flex", flexDirection: "column"}}>
+          <h3>Not Login</h3>
           <button
             onClick={() => {
               navigate("/login");
@@ -34,7 +34,7 @@ const MainBar = () => {
           >
             Regist
           </button>
-        </>
+        </div>
       )}
     </>
   );

@@ -1,6 +1,6 @@
-import { Member } from "../../dto";
-import MemberStore from "../store/MemberStore";
-import { MemoryMap } from "./io";
+import {Member} from "../../dto";
+import MemberStore from "../storeModel/MemberStore";
+import {MemoryMap} from "./io";
 
 class MemberMapStore implements MemberStore {
   memberMap: Map<string, Member>;
@@ -21,9 +21,8 @@ class MemberMapStore implements MemberStore {
   }
 
   search(id: string): Member | undefined {
-    const searchMember = this.memberMap.get(id);
 
-    return searchMember;
+    return this.memberMap.get(id);
   }
 
   login(id: string, password: string): Member | undefined {

@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+.searchField {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 20px;
+
+}
+
+.searchField .MuiFormControl-fullWidth {
+  width: auto;
+  min-width: 100px;
+}
+
+.searchField .MuiFormControl-fullWidth .MuiInputBase-root {
+  height: 40px;
+}

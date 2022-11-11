@@ -1,31 +1,61 @@
+import { useLocation } from "react-router-dom";
 import { MainBar, ScrollTop } from "../../../share";
+import {SearchBar} from "../../../share";
+import React, {useState} from "react";
+import {SearchView} from "../ui";
+import BasicModal from "../../../share/utils/BasicModal";
+
 
 const Main = () => {
-  const loginMember = sessionStorage.getItem("loginId");
+  const { state } = useLocation();
+  const [searchValue, setSearchValue] = useState()
 
-  let member = null;
-  if (loginMember !== null) {
-    member = JSON.parse(loginMember);
+  const search = (searchVal: any) => {
+    setSearchValue(searchVal)
+  };
+
+  const loginCheck = () => {
+    const loginMember = sessionStorage.getItem("loginId");
+
+    let member = null;
+
+    if (loginMember !== null) {
+      member = JSON.parse(loginMember);
+    }
+
+    return member !== null && state?.newLogin !== "logout" && (
+      <>
+        <h3>LoginMember</h3>
+        <SearchView member={member} />
+      </>
+    )
+  };
+
+  const searchCheck = () => {
+    return ( searchValue != null && (
+        <BasicModal title='SearchMember' content={searchValue} op={true}/>
+      )
+    )
   }
 
-  console.log("login : ", member);
   return (
+
     <>
-      <MainBar />
-      <h1>Here is Main Page</h1>
-      {member !== null ? (
-        <>
-          <ul>
-            <li>Id : {member.id}</li>
-            <li>Password : {member.password}</li>
-            <li>Name : {member.name}</li>
-            <li>Address : {member.address}</li>
-            <li>Type : {member.type}</li>
-          </ul>
-        </>
-      ) : (
-        ""
-      )}
+      <div style={{display: "flex", justifyContent: "space-between"}}>
+        <h1>Here is Main Page</h1>
+        <div>
+          <SearchBar search={search} searchOptions={ ['ID', 'Pass'] }/>
+        </div>
+      </div>
+      <div style={{display: "flex", justifyContent: "space-between"}}>
+        <div>
+          <MainBar />
+        </div>
+        <div style={{display: "flex", flexDirection: "column"}}>
+          {loginCheck()}
+          {searchCheck()}
+        </div>
+      </div>
       <ScrollTop />
     </>
   );
