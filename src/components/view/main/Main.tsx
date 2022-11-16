@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { MainBar, ScrollTop } from "../../../share";
 import {SearchBar} from "../../../share";
 import React, {useState} from "react";
-import {SearchView} from "../ui";
+import {SearchView, TopBar} from "../ui";
 import BasicModal from "../../../share/utils/BasicModal";
 
 
@@ -41,6 +41,7 @@ const Main = () => {
   return (
 
     <>
+      <TopBar />
       <div style={{display: "flex", justifyContent: "space-between"}}>
         <h1>Here is Main Page</h1>
         <div>

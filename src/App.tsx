@@ -12,6 +12,9 @@ function App() {
         <Route path={"/"} element={<Main />} />
         <Route path={"/login"} element={<LoginView />} />
         <Route path={"/regist"} element={<RegistView />} />
+        <Route path={"/adopt"} element={<Main />} />
+        <Route path={"/sitter"} element={<Main />} />
+        <Route path={"/shop"} element={<Main />} />
       </Routes>
     </BrowserRouter>
   );

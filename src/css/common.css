@@ -4,7 +4,6 @@
   display: flex;
   justify-content: space-between;
   margin-right: 20px;
-
 }
 
 .searchField .MuiFormControl-fullWidth {
@@ -14,4 +13,13 @@
 
 .searchField .MuiFormControl-fullWidth .MuiInputBase-root {
   height: 40px;
+}
+
+.top {
+  background-color: rgba(255, 255, 255, 80%);
+  display: flex;
+}
+
+.css-jpln7h-MuiTabs-scroller .MuiTabs-indicator {
+  width: 0;
 }
