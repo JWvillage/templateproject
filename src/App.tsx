@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { LoginView, Main, RegistView } from "./components";
+import {LoginView, Main, RegistView, SitterMain} from "./components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
         <Route path={"/login"} element={<LoginView />} />
         <Route path={"/regist"} element={<RegistView />} />
         <Route path={"/adopt"} element={<Main />} />
-        <Route path={"/sitter"} element={<Main />} />
+        <Route path={"/sitter"} element={<SitterMain />} />
         <Route path={"/shop"} element={<Main />} />
       </Routes>
     </BrowserRouter>

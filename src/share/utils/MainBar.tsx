@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 const MainBar = () => {
   const navigate = useNavigate();
 
+  const loginMember = sessionStorage.getItem("loginId")
   return (
     <>
-      {sessionStorage.getItem("loginId") !== null ? (
-        <div style={{display: "flex", flexDirection: "column"}}>
-          <h3>Logout</h3>
-          <button
+      {loginMember !== null ? (
+        <div className='login_Btn_Group'>
+          <p style={{fontSize: '16px', paddingRight: '10px'}}>
+            {JSON.parse(loginMember).name} 회원님
+          </p>
+          <button className='login_Btn'
             onClick={() => {
               sessionStorage.removeItem("loginId");
               navigate("/", { state: { newLogin: "logout" } });
@@ -18,16 +21,15 @@ const MainBar = () => {
           </button>
         </div>
       ) : (
-        <div style={{display: "flex", flexDirection: "column"}}>
-          <h3>Not Login</h3>
-          <button
+        <div className='login_Btn_Group'>
+          <button className='login_Btn'
             onClick={() => {
               navigate("/login");
             }}
           >
             Login
           </button>
-          <button
+          <button className='login_Btn'
             onClick={() => {
               navigate("/regist");
             }}

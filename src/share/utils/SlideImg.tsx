@@ -11,13 +11,10 @@ const SlideImg: React.FC<Props> = ({ imgList }) => {
   React.useEffect(() => {
     const c = document.getElementsByTagName("img")[0];
     c.style.display = "flex";
-    // console.log("first : ", count);
   }, []);
 
   React.useEffect(() => {
-    // console.log("second : ", count);
     if (customInterVal !== 10000) {
-      // console.log("third : ", count);
       const transTimer = setInterval(() => {
         if (count < imgList.length - 1) {
           setCount((count) => count + 1);
@@ -25,14 +22,15 @@ const SlideImg: React.FC<Props> = ({ imgList }) => {
           setCount(0);
         }
       }, customInterVal);
-      const caroTags = document.getElementsByTagName("img");
+      const caroTags = document.getElementsByClassName("caroImg");
       for (var i = 0; i < caroTags.length; i++) {
+        // @ts-ignore
         caroTags[i].style.display = "none";
       }
-      const showImg = document.getElementsByTagName("img")[count];
+      const showImg = document.getElementById("caro" + count);
+      // @ts-ignore
       showImg.style.display = "flex";
       return () => {
-        // console.log("fourth : ", count);
         clearInterval(transTimer);
       };
     } else {
@@ -41,7 +39,6 @@ const SlideImg: React.FC<Props> = ({ imgList }) => {
   }, [count, customInterVal]);
 
   const btnImg = (el: any) => {
-    // console.log(el.target.value);
     const val: number = parseInt(el.target.value);
     setCount(val);
   };
@@ -52,9 +49,11 @@ const SlideImg: React.FC<Props> = ({ imgList }) => {
         const id = "caro" + i;
         return (
           <img
+            className='caroImg'
             key={i}
             id={id}
             src={content}
+            alt=''
             onMouseOver={() => {
               setCustomInterVal(10000);
             }}
@@ -64,12 +63,12 @@ const SlideImg: React.FC<Props> = ({ imgList }) => {
           />
         );
       })}
-      <div style={{ position: "fixed", alignSelf: "end", width: "100px" }}>
+      <div style={{ position: "absolute", alignSelf: "end", width: "250px" }}>
         {imgList.map((content, i) => {
           const btnId = "btn_" + i;
           return (
-            <button key={i} id={btnId} value={i} onClick={btnImg}>
-              {i}
+            <button className='tag_ImgBtn' key={i} id={btnId} value={i} onClick={btnImg}>
+              o
             </button>
           );
         })}
