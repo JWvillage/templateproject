@@ -1,5 +1,84 @@
 @charset "utf-8";
 
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1, h2, h3, h4, h5, h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl, dt, dd,
+ol, ul, li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody, tfoot, thead,
+tr, th, td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer, header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-family: 'BM JUA_TTF';
+  vertical-align: baseline
+}
+
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
 * {
   font-family: 'BM JUA_TTF';
 }
@@ -10,10 +89,6 @@ li {
 
 a {
   text-decoration: none;
-}
-
-p {
-  line-height: 10px;
 }
 
 .searchField {
@@ -59,6 +134,7 @@ p {
   z-index: 999;
   opacity: 80%;
 }
+
 .top {
   margin-bottom: 10px;
 }
@@ -115,7 +191,7 @@ p {
   z-index: 999;
 }
 
-.regist_Root{
+.regist_Root {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -187,4 +263,37 @@ p {
 
 .worning {
   color: red;
+}
+
+.gen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #CCCCCC;
+  border-radius: 5px;
+  height: 50px;
+  width: 50px;
+}
+
+.gen_btn {
+  position: absolute;
+  font-size: 17px;
+  color: #333333;
+  background-color: #FFFFFF;
+  /*pointer-events: none;*/
+  opacity: 0.65;
+  border: 1px solid transparent;
+  cursor: pointer;
+  padding: .375rem .75rem;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  line-height: 1.5;
+  font-weight: 400;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+}
+
+.gen_select {
+
 }

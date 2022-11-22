@@ -7,7 +7,7 @@ import { Member } from "../../../store";
 const LoginView = () => {
   const navigate = useNavigate();
 
-  const m = new Member("", "", "", "");
+  const m = new Member("", "", "", "", "", "", "", "");
 
   const [member, setMember] = React.useState(m);
 
@@ -28,7 +28,7 @@ const LoginView = () => {
     if (loginMember) {
       setLoginSucc("Succ");
       // setMember(loginMember);
-      sessionStorage.setItem("loginId", JSON.stringify(loginMember));
+      sessionStorage.setItem("loginId",JSON.stringify({"id": loginMember.id, "name": loginMember.name, "type": loginMember.type}));
       navigate("/");
     } else {
       alert("No such Id or Password");

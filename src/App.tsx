@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import {LoginView, Main, RegistView, SitterMain} from "./components";
+import {LoginView, Main, MyMenu, RegistView, SitterMain} from "./components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
         <Route path={"/adopt"} element={<Main />} />
         <Route path={"/sitter"} element={<SitterMain />} />
         <Route path={"/shop"} element={<Main />} />
+        <Route path={"/myMenu"} element={<MyMenu />}/>
       </Routes>
     </BrowserRouter>
   );

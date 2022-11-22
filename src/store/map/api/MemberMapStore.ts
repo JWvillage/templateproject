@@ -32,7 +32,7 @@ class MemberMapStore implements MemberStore {
   }
 }
 
-const member = new Member("a", "b", "c", "d");
+const member = new Member("a", "b", "NakaLiCouBae", "kakao@kakao.co.kr", "naver본사", "010-1111-2222", "2022-11-22", "F");
 
 new MemberMapStore().regist(member);
 
