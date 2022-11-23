@@ -1,10 +1,14 @@
 import React from 'react';
+import {TopBar} from "../ui";
 
 const MyMenu = () => {
   return (
-      <div>
-        <h1>Here is MyMenu</h1>
-      </div>
+      <>
+        <TopBar />
+        <div>
+          <h1>Here is MyMenu</h1>
+        </div>
+      </>
   );
 };
 

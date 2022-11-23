@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import MemberRegist from "../../api/member/MemberRegist";
-import {TopBar} from "../ui";
+import {TopBar, zipCode} from "../ui";
+import {postcodeScriptUrl} from "react-daum-postcode/lib/loadPostcode";
 
 const RegistView = () => {
   const navigate = useNavigate();
@@ -10,8 +11,14 @@ const RegistView = () => {
     id: "",
     password: "",
     name: "",
-    address: "",
     type: "nor",
+    email: "",
+    address: "",
+    phone: "",
+    registerDate: "",
+    birthDay: "",
+    gender: "",
+    photo: ""
   });
 
   const changeMember = (event: any) => {
@@ -21,15 +28,28 @@ const RegistView = () => {
     console.log(member)
   };
 
-  const [clickCheck, setClickCheck] = useState(0)
+  const [gen, setGen] = useState('')
+
+  useEffect(() => {
+    const genBtn = document.getElementsByClassName('gen_btn')
+    for (var i = 0; i < document.getElementsByClassName('gen_btn').length; i++) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      gen === genBtn[i].getAttribute('value') ?
+          genBtn[i].className += ' gen_select' : genBtn[i].className = 'gen_btn'
+    }
+  }, [gen])
 
   const genSelect = (event: any) => {
-    const { name } = event.target;
-    console.log(name)
-    console.log(event.target.parentNode.className)
-    event.target.style.backgroundColor = '#75c9ba'
+    const { value } = event.target;
+    setGen(value)
   };
 
+  const [zoneCode, setZoneCode] = useState('')
+  const [address, setAddress] = useState('')
+
+  const handleAddress = (dataName: string, dataValue: string) => {
+    dataName === 'zoncode' ? setZoneCode(dataValue) : setAddress(dataValue)
+  }
   return (
     <>
       <TopBar />
@@ -151,65 +171,97 @@ const RegistView = () => {
                 </div>
                 <div className='gen' style={{marginLeft: '10px'}}>
                   <input
-                      type="button"
-                      value='M'
-                      name='gen_M'
-                      className='gen_btn'
+                    type="button"
+                    value='M'
+                    name='gen_M'
+                    className='gen_btn'
+                    onClick={genSelect}
                   />
                 </div>
               </div>
             </div>
           </div>
+          {/* 주소 */}
+          <div className='regist_margin'>
+            <p className='regist_sort'>주소</p>
+            <div className='sort_root_address'>
+              <div style={{display: "flex"}}>
+                <input
+                  className='zipCode'
+                  name="zonecode"
+                  type="text"
+                  value={zoneCode}
+                />
+                {zipCode(handleAddress)}
+              </div>
+              <div className='address_div'>
+                <input
+                  type="text"
+                  className="address_input"
+                  name="address1"
+                  value={address}
+                />
+              </div>
+              <div className='address_div'>
+                <input
+                  type="text"
+                  className="address_input"
+                  name="address2"
+                />
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-      {/*<table>*/}
-      {/*  <thead>*/}
-      {/*    <tr>*/}
-      {/*      <th>id</th>*/}
-      {/*      <th>password</th>*/}
-      {/*      <th>name</th>*/}
-      {/*      <th>address</th>*/}
-      {/*    </tr>*/}
-      {/*  </thead>*/}
-      {/*  <tbody>*/}
-      {/*    <tr>*/}
-      {/*      <td>*/}
-      {/*        <input type="text" name="id" onChange={changeMember} />*/}
-      {/*      </td>*/}
-      {/*      <td>*/}
-      {/*        <input type="password" name="password" onChange={changeMember} />*/}
-      {/*      </td>*/}
-      {/*      <td>*/}
-      {/*        <input type="text" name="name" onChange={changeMember} />*/}
-      {/*      </td>*/}
-      {/*      <td>*/}
-      {/*        <input type="text" name="address" onChange={changeMember} />*/}
-      {/*      </td>*/}
-      {/*    </tr>*/}
-      {/*  </tbody>*/}
-      {/*</table>*/}
-      {/*<button*/}
-      {/*  onClick={() => {*/}
-      {/*    MemberRegist.instance.memberRegist(member);*/}
-      {/*    navigate("/login");*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  Regist*/}
-      {/*</button>*/}
-      {/*<button*/}
-      {/*  onClick={() => {*/}
-      {/*    navigate("/login");*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  Login*/}
-      {/*</button>*/}
-      {/*<button*/}
-      {/*  onClick={() => {*/}
-      {/*    navigate("/");*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  Main*/}
-      {/*</button>*/}
+      <table>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>password</th>
+            <th>name</th>
+            <th>address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input type="text" name="id" onChange={changeMember} />
+            </td>
+            <td>
+              <input type="password" name="password" onChange={changeMember} />
+            </td>
+            <td>
+              <input type="text" name="name" onChange={changeMember} />
+            </td>
+            <td>
+              <input type="text" name="address" onChange={changeMember} />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+        onClick={() => {
+          MemberRegist.instance.memberRegist(member);
+          navigate("/login");
+        }}
+      >
+        Regist
+      </button>
+      <button
+        onClick={() => {
+          navigate("/login");
+        }}
+      >
+        Login
+      </button>
+      <button
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        Main
+      </button>
     </>
   );
 };

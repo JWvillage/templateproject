@@ -1,18 +1,15 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   Box,
   Container,
   Grid,
   IconButton,
   Paper,
-  Tab,
-  Tabs,
   Typography
 } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {useNavigate} from "react-router-dom";
 import {MainBar} from "../../../share";
-import {Menu} from "../../../store";
 import MenuList from "../mymenu/MenuList";
 
 const TopBar = () => {
@@ -103,16 +100,7 @@ const TopBar = () => {
                         aria-label="menu"
                         sx={{ mr: 2 }}
                         onClick={() => {
-                          // navigate('/myMenu')
-                          // return (
-                          //   <Paper
-                          //     className='tab_panel'
-                          //     role="tabpanel"
-                          //   >
-                          //     <MenuList />
-                          //   </Paper>
-                          // )
-                          if (value != 5) {
+                          if (value !== 5) {
                             setValue(5)
                           } else {
                             setValue(0)
@@ -179,7 +167,7 @@ const TopBar = () => {
             aria-labelledby={`simple-tab-${index}`}
             elevation={2}
             {...other}
-            style={{width: '300px'}}
+            style={{width: '200px'}}
         >
           <MenuList />
         </Paper>
