@@ -28,27 +28,30 @@ const RegistView = () => {
     console.log(member)
   };
 
-  const [gen, setGen] = useState('')
-
   useEffect(() => {
     const genBtn = document.getElementsByClassName('gen_btn')
     for (var i = 0; i < document.getElementsByClassName('gen_btn').length; i++) {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      gen === genBtn[i].getAttribute('value') ?
+      member.gender === genBtn[i].getAttribute('value') ?
           genBtn[i].className += ' gen_select' : genBtn[i].className = 'gen_btn'
     }
-  }, [gen])
+  }, [member.gender])
 
   const genSelect = (event: any) => {
     const { value } = event.target;
-    setGen(value)
+    setMember({...member, gender: value})
   };
 
   const [zoneCode, setZoneCode] = useState('')
-  const [address, setAddress] = useState('')
+  const [postAddress, setPostAddress] = useState('')
 
   const handleAddress = (dataName: string, dataValue: string) => {
-    dataName === 'zoncode' ? setZoneCode(dataValue) : setAddress(dataValue)
+    dataName === 'zoncode' ? setZoneCode(dataValue) : setPostAddress(dataValue)
+  }
+
+  const setAddress = (e: any) => {
+    const wholeAddress = postAddress + " " + e.target.value
+    setMember({...member, address: wholeAddress})
   }
   return (
     <>
@@ -154,9 +157,10 @@ const RegistView = () => {
                 <input
                   className='sort_field'
                   type="text"
-                  name='birth'
+                  name='birthDay'
                   style={{width: '280px'}}
                   placeholder='생년월일을 입력하세요'
+                  onChange={changeMember}
                 />
               </div>
               <div style={{display: 'flex', marginLeft: '10px'}}>
@@ -199,7 +203,7 @@ const RegistView = () => {
                   type="text"
                   className="address_input"
                   name="address1"
-                  value={address}
+                  value={postAddress}
                 />
               </div>
               <div className='address_div'>
@@ -207,11 +211,67 @@ const RegistView = () => {
                   type="text"
                   className="address_input"
                   name="address2"
+                  onChange={setAddress}
                 />
               </div>
             </div>
           </div>
-
+          {/* 이메일 */}
+          <div className='regist_margin'>
+            <p className='regist_sort'>이메일</p>
+            <div className='sort_root'>
+              <div>
+                <img src="" alt="" className='sub_img'/>
+              </div>
+              <div>
+                <input
+                    className='sort_field'
+                    type="text"
+                    name='email'
+                    placeholder='이메일을 입력하세요'
+                    onChange={changeMember}
+                />
+              </div>
+              <div>
+                <button type='button' className='sort_btn'>
+                  <img src="" alt="" className='sort_img'/>
+                </button>
+              </div>
+            </div>
+            <div style={{marginTop: '5px'}}>
+              <p><span id='email_check' className='check'></span></p>
+            </div>
+            <p style={{color: '#4D505A'}}>예) petsfinder@petsfinder.com</p>
+          </div>
+          {/* 전화번호 */}
+          <div className='regist_margin'>
+            <p className='regist_sort'>전화번호</p>
+            <div className='sort_root' style={{border: 0, padding: 0}}>
+              <div>
+                <select id="mobile1" name="mobile1"
+                        className="sort_field_mobile"
+                        style={{width: '95px', margin: '0 12px 0 0 '}}>
+                  <option value="">선택</option>
+                  <option value="010">010</option>
+                  <option value="011">011</option>
+                  <option value="016">016</option>
+                  <option value="019">019</option>
+                </select>
+              </div>
+              <div>
+                <input id="mobile2" name="mobile2" type="text" className="sort_field_mobile"
+                       maxLength={4}/>
+              </div>
+              <div>
+                <input id="mobile3" name="mobile3" type="text"
+                   className="sort_field_mobile"
+                   maxLength={4}/>
+              </div>
+            </div>
+            <div style={{marginTop: '5px'}}>
+              <p><span id='mobile_check' className='check'></span></p>
+            </div>
+          </div>
         </div>
       </div>
       <table>

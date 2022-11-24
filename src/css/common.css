@@ -244,7 +244,14 @@ a {
   padding: 1px 2px;
   outline: none;
 }
-
+.sort_field_mobile {
+  width: 160px;
+  height: 52px;
+  border: 1px solid #CCCCCC;
+  margin: 0 12px;
+  padding: 1px 2px;
+  outline: none;
+}
 .sort_root .sort_btn {
   width: 50px;
   height: 50px;
@@ -322,7 +329,7 @@ a {
   color: #333333;
   background-color: #FFFFFF;
   /*pointer-events: none;*/
-  border: 1px solid transparent;
+  border: 1px solid #CCCCCC;
   cursor: pointer;
   padding: .375rem .75rem;
   border-radius: .25rem;
