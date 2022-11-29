@@ -194,7 +194,7 @@ const MenuList = () => {
   ]
 
   let firstDepth: any[] = [];
-  let thirdDepth: any[] = [];
+  // let thirdDepth: any[] = [];
   menu.map((one, i) => {
     // console.log(i, 'menuCode : ' + one.menuCode)
     let secondDepth: any[] = [];

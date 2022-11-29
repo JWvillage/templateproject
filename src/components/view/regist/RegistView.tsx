@@ -2,30 +2,42 @@ import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import MemberRegist from "../../api/member/MemberRegist";
 import {TopBar, zipCode} from "../ui";
-import {postcodeScriptUrl} from "react-daum-postcode/lib/loadPostcode";
+import {GroupAdd} from '@mui/icons-material'
+import {Member} from "../../../store";
 
 const RegistView = () => {
   const navigate = useNavigate();
 
-  const [member, setMember] = useState({
-    id: "",
-    password: "",
-    name: "",
-    type: "nor",
-    email: "",
-    address: "",
-    phone: "",
-    registerDate: "",
-    birthDay: "",
-    gender: "",
-    photo: ""
-  });
+  const [member, setMember] = useState(new Member("", "", "", "", "", "", "", ""));
+
+  const [requiredCheck, setRequiredCheck] = useState(false)
 
   const changeMember = (event: any) => {
     const { value } = event.target;
     const { name } = event.target;
-    setMember({...member, [ name ] : value})
+    if (name === 'mobile3') {
+      const phoneNumber = phoneFirstNumber + "-" + phoneMiddleNumber + "-" + value
+      setMember({...member, phone: phoneNumber})
+    } else if (name === 'address2') {
+      const wholeAddress = postAddress + " " + value
+      setMember({...member, address: wholeAddress})
+    } else {
+      setMember({...member, [ name ] : value})
+    }
     console.log(member)
+
+    if (member.id !== '' &&
+        member.password !== '' &&
+        member.name !== '' &&
+        member.email !== '' &&
+        member.address !== '' &&
+        member.id !== '' &&
+        member.phone !== '' &&
+        member.birthDay !== '' &&
+        member.phone !== ''
+    ) {
+      setRequiredCheck(true)
+    }
   };
 
   useEffect(() => {
@@ -37,11 +49,13 @@ const RegistView = () => {
     }
   }, [member.gender])
 
+  // 성별
   const genSelect = (event: any) => {
     const { value } = event.target;
     setMember({...member, gender: value})
   };
 
+  // 주소
   const [zoneCode, setZoneCode] = useState('')
   const [postAddress, setPostAddress] = useState('')
 
@@ -50,9 +64,17 @@ const RegistView = () => {
   }
 
   const setAddress = (e: any) => {
-    const wholeAddress = postAddress + " " + e.target.value
-    setMember({...member, address: wholeAddress})
+
   }
+
+  // 전화번호
+  const [phoneFirstNumber, setPhoneFirstNumber] = useState('')
+  const [phoneMiddleNumber, setPhoneMiddleNumber] = useState('')
+
+  const options = [
+      '010', '011'
+  ]
+
   return (
     <>
       <TopBar />
@@ -66,7 +88,7 @@ const RegistView = () => {
             <p className='regist_sort'>아이디</p>
             <div className='sort_root'>
               <div>
-                <img src="" alt="" className='sub_img'/>
+                <img src="/static/img/subIcon.png" alt="" className='sub_img'/>
               </div>
               <div>
                 <input
@@ -79,7 +101,7 @@ const RegistView = () => {
               </div>
               <div>
                 <button type='button' className='sort_btn'>
-                  <img src="" alt="" className='sort_img'/>
+                  <img src="/static/img/lockIcon.png" alt="" className='sort_img'/>
                 </button>
               </div>
             </div>
@@ -94,7 +116,7 @@ const RegistView = () => {
             <p className='regist_sort'>비밀번호</p>
             <div className='sort_root'>
               <div>
-                <img src="" alt="" className='sub_img'/>
+                <img src="/static/img/subIcon.png" alt="" className='sub_img'/>
               </div>
               <div>
                 <input
@@ -107,7 +129,7 @@ const RegistView = () => {
               </div>
               <div>
                 <button type='button' className='sort_btn'>
-                  <img src="" alt="" className='sort_img'/>
+                  <img src="/static/img/lockIcon.png" alt="" className='sort_img'/>
                 </button>
               </div>
             </div>
@@ -122,7 +144,7 @@ const RegistView = () => {
             <p className='regist_sort'>이름</p>
             <div className='sort_root'>
               <div>
-                <img src="" alt="" className='sub_img'/>
+                <img src="/static/img/subIcon.png" alt="" className='sub_img'/>
               </div>
               <div>
                 <input
@@ -135,7 +157,7 @@ const RegistView = () => {
               </div>
               <div>
                 <button type='button' className='sort_btn'>
-                  <img src="" alt="" className='sort_img'/>
+                  <img src="/static/img/lockIcon.png" alt="" className='sort_img'/>
                 </button>
               </div>
             </div>
@@ -152,7 +174,7 @@ const RegistView = () => {
             <div className='sort_root' style={{border: 0, padding: 0}}>
               <div className='sort_root' style={{width: '360px', marginTop: 0}}>
                 <div>
-                  <img src="" alt="" className='sub_img'/>
+                  <img src="/static/img/subIcon.png" alt="" className='sub_img'/>
                 </div>
                 <input
                   className='sort_field'
@@ -167,7 +189,7 @@ const RegistView = () => {
                 <div className='gen'>
                   <input
                     type="button"
-                    value='F'
+                    defaultValue='F'
                     name='gen_F'
                     className='gen_btn'
                     onClick={genSelect}
@@ -176,7 +198,7 @@ const RegistView = () => {
                 <div className='gen' style={{marginLeft: '10px'}}>
                   <input
                     type="button"
-                    value='M'
+                    defaultValue='M'
                     name='gen_M'
                     className='gen_btn'
                     onClick={genSelect}
@@ -191,19 +213,29 @@ const RegistView = () => {
             <div className='sort_root_address'>
               <div style={{display: "flex"}}>
                 <input
+                  disabled={true}
                   className='zipCode'
                   name="zonecode"
                   type="text"
+                  readOnly={postAddress === '' ? true : false}
                   value={zoneCode}
+                  onChange={(e) => {
+                    e.target.blur()
+                  }}
                 />
                 {zipCode(handleAddress)}
               </div>
               <div className='address_div'>
                 <input
+                  disabled={true}
                   type="text"
                   className="address_input"
                   name="address1"
+                  readOnly={postAddress === '' ? true : false}
                   value={postAddress}
+                  onChange={(e) => {
+                    e.target.blur()
+                  }}
                 />
               </div>
               <div className='address_div'>
@@ -211,7 +243,7 @@ const RegistView = () => {
                   type="text"
                   className="address_input"
                   name="address2"
-                  onChange={setAddress}
+                  onChange={changeMember}
                 />
               </div>
             </div>
@@ -221,7 +253,7 @@ const RegistView = () => {
             <p className='regist_sort'>이메일</p>
             <div className='sort_root'>
               <div>
-                <img src="" alt="" className='sub_img'/>
+                <img src="/static/img/subIcon.png" alt="" className='sub_img'/>
               </div>
               <div>
                 <input
@@ -234,7 +266,7 @@ const RegistView = () => {
               </div>
               <div>
                 <button type='button' className='sort_btn'>
-                  <img src="" alt="" className='sort_img'/>
+                  <img src="/static/img/lockIcon.png" alt="" className='sort_img'/>
                 </button>
               </div>
             </div>
@@ -248,80 +280,117 @@ const RegistView = () => {
             <p className='regist_sort'>전화번호</p>
             <div className='sort_root' style={{border: 0, padding: 0}}>
               <div>
-                <select id="mobile1" name="mobile1"
-                        className="sort_field_mobile"
-                        style={{width: '95px', margin: '0 12px 0 0 '}}>
+                <select
+                  id="mobile1"
+                  name="mobile1"
+                  className="sort_field_mobile"
+                  defaultValue={phoneFirstNumber}
+                  onChange={(e) => setPhoneFirstNumber(e.target.value)}
+                  style={{width: '95px', margin: '0 12px 0 0 '}}
+                >
                   <option value="">선택</option>
-                  <option value="010">010</option>
-                  <option value="011">011</option>
-                  <option value="016">016</option>
-                  <option value="019">019</option>
+                  {options.map((content, i) => {
+                    return <option key={i} value={content}>{content}</option>
+                  })}
                 </select>
               </div>
+              -
               <div>
-                <input id="mobile2" name="mobile2" type="text" className="sort_field_mobile"
-                       maxLength={4}/>
+                <input
+                  id="mobile2"
+                  name="mobile2"
+                  type="text"
+                  className="sort_field_mobile"
+                  onChange={(e) => {
+                    setPhoneMiddleNumber(e.target.value)
+                  }}
+                  maxLength={4}
+                />
               </div>
+              -
               <div>
-                <input id="mobile3" name="mobile3" type="text"
-                   className="sort_field_mobile"
-                   maxLength={4}/>
+                <input
+                  id="mobile3"
+                  name="mobile3"
+                  type="text"
+                  className="sort_field_mobile"
+                  onChange={changeMember}
+                  maxLength={4}
+                />
               </div>
             </div>
             <div style={{marginTop: '5px'}}>
               <p><span id='mobile_check' className='check'></span></p>
             </div>
           </div>
+          {/* 버튼 */}
+          <div className="member_Btn_div">
+            <div>
+              <p style={{fontSize: '30px', fontWeight: 'bold'}}>회원 가입</p>
+            </div>
+            <button className="login_Btn_Icon" onClick={(e) => {
+              e.preventDefault();
+              if (requiredCheck === true) {
+                MemberRegist.instance.memberRegist(member);
+                navigate("/login");
+              }
+            }}>
+              <GroupAdd />
+            </button>
+          </div>
+          <div className="login_Text">
+            <a href="/login" style={{color: 'black'}}>로그인</a>
+          </div>
         </div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>password</th>
-            <th>name</th>
-            <th>address</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <input type="text" name="id" onChange={changeMember} />
-            </td>
-            <td>
-              <input type="password" name="password" onChange={changeMember} />
-            </td>
-            <td>
-              <input type="text" name="name" onChange={changeMember} />
-            </td>
-            <td>
-              <input type="text" name="address" onChange={changeMember} />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button
-        onClick={() => {
-          MemberRegist.instance.memberRegist(member);
-          navigate("/login");
-        }}
-      >
-        Regist
-      </button>
-      <button
-        onClick={() => {
-          navigate("/login");
-        }}
-      >
-        Login
-      </button>
-      <button
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Main
-      </button>
+      {/*<table>*/}
+      {/*  <thead>*/}
+      {/*    <tr>*/}
+      {/*      <th>id</th>*/}
+      {/*      <th>password</th>*/}
+      {/*      <th>name</th>*/}
+      {/*      <th>address</th>*/}
+      {/*    </tr>*/}
+      {/*  </thead>*/}
+      {/*  <tbody>*/}
+      {/*    <tr>*/}
+      {/*      <td>*/}
+      {/*        <input type="text" name="id" onChange={changeMember} />*/}
+      {/*      </td>*/}
+      {/*      <td>*/}
+      {/*        <input type="password" name="password" onChange={changeMember} />*/}
+      {/*      </td>*/}
+      {/*      <td>*/}
+      {/*        <input type="text" name="name" onChange={changeMember} />*/}
+      {/*      </td>*/}
+      {/*      <td>*/}
+      {/*        <input type="text" name="address" onChange={changeMember} />*/}
+      {/*      </td>*/}
+      {/*    </tr>*/}
+      {/*  </tbody>*/}
+      {/*</table>*/}
+      {/*<button*/}
+      {/*  onClick={() => {*/}
+      {/*    MemberRegist.instance.memberRegist(member);*/}
+      {/*    navigate("/login");*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  Regist*/}
+      {/*</button>*/}
+      {/*<button*/}
+      {/*  onClick={() => {*/}
+      {/*    navigate("/login");*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  Login*/}
+      {/*</button>*/}
+      {/*<button*/}
+      {/*  onClick={() => {*/}
+      {/*    navigate("/");*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  Main*/}
+      {/*</button>*/}
     </>
   );
 };

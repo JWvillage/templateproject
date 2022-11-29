@@ -191,6 +191,7 @@ a {
   z-index: 999;
 }
 
+/* 회원가입 */
 .regist_Root {
   display: flex;
   flex-direction: column;
@@ -204,7 +205,7 @@ a {
   align-items: center;
   border: 1px solid #aaa;
   width: 960px;
-  height: 2200px;
+  height: 1800px;
   border-radius: 30px;
   margin: 80px 0 280px 0;
   left: 40%;
@@ -347,4 +348,33 @@ a {
 
 .menu_root span{
   font-weight: 600;
+}
+
+.login_Btn_Icon {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 5px;
+  width: 60px;
+  height: 60px;
+  background-color: #75c9ba;
+  border-radius: 30px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  cursor: pointer;
+}
+
+.login_Text {
+  display: flex;
+  justify-content: space-between;
+  width: 450px;
+  margin-top: 50px;
+}
+
+.member_Btn_div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 50px;
+  width: 450px;
 }
