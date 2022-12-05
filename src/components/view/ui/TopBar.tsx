@@ -84,11 +84,19 @@ const TopBar = () => {
                   <div style={{display: 'flex'}}>
                     {navLink.map((content, i) => {
                       return (
-                          <div key={i} className='tab' onMouseOver={tabOver} onMouseOut={tabOut}>
-                            <a href={content.href} className='linkTab' onClick={(e) => {
-                              e.preventDefault();
-                              navigate(`${content.href}`);
-                            }}>{content.label}</a>
+                          <div key={i} className='tab' >
+                            <a
+                              href={content.href}
+                              className='linkTab'
+                              onMouseOver={tabOver}
+                              onMouseOut={tabOut}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                navigate(`${content.href}`);
+                              }}
+                            >
+                              {content.label}
+                            </a>
                           </div>
                       )
                     })}
@@ -172,7 +180,7 @@ const TopBar = () => {
           <MenuList />
         </Paper>
     );
-  };
+  }
 }
 
 

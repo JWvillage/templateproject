@@ -4,6 +4,7 @@ import {
   LoginView,
   Main,
   MyMenu,
+  SelfVarificationCheck,
   RegistView,
   SitterMain
 } from "./components";
@@ -21,6 +22,7 @@ function App() {
       <Routes>
         <Route path={"/"} element={<Main />} />
         <Route path={"/login"} element={<LoginView />} />
+        <Route path={"/beforeRegist"} element={< SelfVarificationCheck urlPath={"/regist"}/>}/>
         <Route path={"/regist"} element={<RegistView />} />
         <Route path={"/adopt"} element={<Main />} />
         <Route path={"/sitter"} element={<SitterMain />} />

@@ -4,6 +4,7 @@ import MemberRegist from "../../api/member/MemberRegist";
 import {TopBar, zipCode} from "../ui";
 import {GroupAdd} from '@mui/icons-material'
 import {Member} from "../../../store";
+import {validate} from "../../../share/utils/Utility";
 
 const RegistView = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const RegistView = () => {
     } else {
       setMember({...member, [ name ] : value})
     }
-    console.log(member)
+    // console.log(member)
 
     if (member.id !== '' &&
         member.password !== '' &&
@@ -48,7 +49,6 @@ const RegistView = () => {
           genBtn[i].className += ' gen_select' : genBtn[i].className = 'gen_btn'
     }
   }, [member.gender])
-
 
   // 성별
   const genSelect = (event: any) => {
@@ -91,27 +91,17 @@ const RegistView = () => {
                 <input
                   className='sort_field'
                   type="text"
-                  name='id'
+                  name="id"
                   placeholder='아이디를 입력하세요'
                   minLength={6}
                   maxLength={12}
-                  onBlur={(e) => {
-                    const id_validate = document.getElementById('id_check')
-                    if (id_validate !== null && e.target.value !== null) {
-                      if (e.target.value.length >= 6 && e.target.value.length <= 12) {
-                        id_validate.innerHTML = "사용가능한 아이디 입니다.";
-                        document.getElementsByClassName('sort_img')[0].setAttribute('src', '/static/img/openIcon.png')
-                      } else {
-                        alert('6자리에서 12자리로 입력해주세요!')
-                      }
-                    }
-                  }}
+                  onBlur={validate}
                   onChange={changeMember}
                 />
               </div>
               <div>
                 <button type='button' className='sort_btn'>
-                  <img src="/static/img/lockIcon.png" alt="" className='sort_img'/>
+                  <img src="/static/img/lockIcon.png" alt="" id='id_sort' className='sort_img'/>
                 </button>
               </div>
             </div>
@@ -132,8 +122,12 @@ const RegistView = () => {
                 <input
                   className='sort_field'
                   type="password"
-                  name='password'
+                  name="password"
                   placeholder='비밀번호를 입력하세요'
+                  style={{fontFamily: 'Fira Code'}}
+                  minLength={8}
+                  maxLength={16}
+                  onBlur={validate}
                   onChange={changeMember}
                 />
               </div>
@@ -144,7 +138,7 @@ const RegistView = () => {
               </div>
             </div>
             <div style={{marginTop: '5px'}}>
-              <p><span id='pw_check' className='check'></span></p>
+              <p><span id='password_check' className='check'></span></p>
               <p>비밀번호는 <span className='worning'>8자리에서 16자리</span>로 입력해주세요</p>
               <p><span className='worning'>영문(대소문자), 숫자, 문자의 조합</span>으로 입력해주세요</p>
             </div>
@@ -160,6 +154,7 @@ const RegistView = () => {
                 <input
                   className='sort_field'
                   type="text"
+                  id='name'
                   name='name'
                   placeholder='이름을 입력하세요'
                   onChange={changeMember}
@@ -189,9 +184,11 @@ const RegistView = () => {
                 <input
                   className='sort_field'
                   type="text"
+                  id='birthDay'
                   name='birthDay'
                   style={{width: '280px'}}
                   placeholder='생년월일을 입력하세요'
+                  onBlur={validate}
                   onChange={changeMember}
                 />
               </div>
@@ -216,6 +213,9 @@ const RegistView = () => {
                 </div>
               </div>
             </div>
+            <div style={{marginTop: '5px'}}>
+              <p><span id='birthDay_check' className='check'></span></p>
+            </div>
           </div>
           {/* 주소 */}
           <div className='regist_margin'>
@@ -227,7 +227,7 @@ const RegistView = () => {
                   className='zipCode'
                   name="zonecode"
                   type="text"
-                  readOnly={postAddress === '' ? true : false}
+                  readOnly={postAddress === ''}
                   value={zoneCode}
                   onChange={(e) => {
                     e.target.blur()
@@ -241,7 +241,7 @@ const RegistView = () => {
                   type="text"
                   className="address_input"
                   name="address1"
-                  readOnly={postAddress === '' ? true : false}
+                  readOnly={postAddress === ''}
                   value={postAddress}
                   onChange={(e) => {
                     e.target.blur()
@@ -340,7 +340,7 @@ const RegistView = () => {
             </div>
             <button className="login_Btn_Icon" onClick={(e) => {
               e.preventDefault();
-              if (requiredCheck === true) {
+              if (requiredCheck) {
                 MemberRegist.instance.memberRegist(member);
                 navigate("/login");
               } else {

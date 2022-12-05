@@ -31,6 +31,7 @@ const MainBar = () => {
           </button>
           <button className='login_Btn'
             onClick={() => {
+              // navigate("/beforeRegist");
               navigate("/regist");
             }}
           >
