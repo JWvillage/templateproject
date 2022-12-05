@@ -22,8 +22,11 @@ const MenuList = () => {
 
   const handleClick = (value: string) => {
     setKeyVal(value)
-    setOpen(!open);
-    console.log(value)
+    if (keyVal === '') {
+      setOpen(!open);
+    } else if (keyVal === value || !open) {
+      setOpen(!open);
+    }
   };
 
   // const menu = new Menu()
@@ -193,45 +196,18 @@ const MenuList = () => {
     },
   ]
 
-  let firstDepth: any[] = [];
-  // let thirdDepth: any[] = [];
-  menu.map((one, i) => {
-    // console.log(i, 'menuCode : ' + one.menuCode)
-    let secondDepth: any[] = [];
-    one.menuLevelValue === "1" ?
-        firstDepth.push(
-        <>
-          <ListItemButton key={one.menuCode + i + 'btn'} onClick={() => {
-            handleClick(one.menuCode)
-          }}>
-            <ListItemText key={one.menuCode + i + 'text'} primary={one.menuName} />
-            {open && keyVal === one.menuCode ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          {secondDepth}
-        </>
-    ) : <></>
-    one.subMenuList !== null ?
-        one.subMenuList.map((two, j) => {
-          secondDepth.push(
-              <Collapse key={two.menuCode + j} in={open && two.parentMenuCode === keyVal} timeout="auto" unmountOnExit>
-                <List key={two.menuCode + j + 'List'} component="div" disablePadding>
-                  <ListItemButton key={two.menuCode + j + 'btn'} sx={{ pl: 4 }}>
-                    <ListItemText key={two.menuCode + j + 'text'} primary={two.menuName} />
-                  </ListItemButton>
-                </List>
-              </Collapse>
-          )
-          // console.log(secondDepth)
-        }) : <></>
-  })
-
   return (
     <List
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
       component="nav"
       aria-labelledby="my-menu"
+      key='menu_list'
       subheader={
-        <ListSubheader component="div" id="my-menu">
+        <ListSubheader
+          component="div"
+          id="my-menu"
+          key='menu_list_subheader'
+        >
           <ListItemButton style={{textAlign: "center"}} onClick={() => {
             navigate('/myMenu')
           }}>
@@ -240,7 +216,33 @@ const MenuList = () => {
         </ListSubheader>
       }
     >
-      {firstDepth}
+      {
+        menu.map((one, i) => {
+          return (
+              <>
+                <ListItemButton className='menuList' key={one.menuCode + i + 'btn'} onClick={() => {
+                  handleClick(one.menuCode)
+                }}>
+                  <ListItemText key={one.menuCode + i + 'text'} primary={one.menuName} />
+                  {open && keyVal === one.menuCode ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                {one.subMenuList !== null ?
+                    one.subMenuList.map((two, j) => {
+                      return (
+                          <Collapse key={two.menuCode + j} in={open && two.parentMenuCode === keyVal} timeout="auto"
+                                    unmountOnExit>
+                            <List className='menuList' key={two.menuCode + j + 'List'} component="div" disablePadding>
+                              <ListItemButton key={two.menuCode + j + 'btn'} sx={{pl: 4}}>
+                                <ListItemText key={two.menuCode + j + 'text'} primary={two.menuName}/>
+                              </ListItemButton>
+                            </List>
+                          </Collapse>
+                      )
+                    }) : <></>}
+              </>
+          )
+        })
+      }
     </List>
   );
 };

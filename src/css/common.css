@@ -124,6 +124,10 @@ a {
   cursor: pointer;
 }
 
+.menuList span {
+  font-family: 'BM JUA_TTF' ;
+}
+
 .topView {
   position: fixed;
   top: 0;
@@ -184,11 +188,27 @@ a {
   width: 100%;
 }
 
+.SlideImgBtn_root {
+  position: absolute;
+  display: flex;
+  align-self: end;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
 .tag_ImgBtn {
-  background: none;
+  height: 12px;
+  margin: 0 3px;
+  background-color: #FFFFFF;
+  opacity: 0.4;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
   z-index: 999;
+}
+
+.tag_ImgBtn:hover {
+  opacity: 1;
 }
 
 /* 회원가입 */

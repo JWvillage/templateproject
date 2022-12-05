@@ -1,4 +1,8 @@
 import React from "react";
+import {
+  NavigateBefore,
+  NavigateNext
+} from '@mui/icons-material';
 
 interface Props {
   imgList: any[];
@@ -63,15 +67,35 @@ const SlideImg: React.FC<Props> = ({ imgList }) => {
           />
         );
       })}
-      <div style={{ position: "absolute", alignSelf: "end", width: "250px" }}>
+      <div className='SlideImgBtn_root'>
+        <NavigateBefore
+          fontSize="small"
+          style={{cursor: 'pointer'}}
+          onClick={() => {
+            const caroTags = document.getElementsByClassName("caroImg")
+            if (count > 0)
+              setCount(count => count - 1)
+            else if (count === 0)
+              setCount(count => caroTags.length - 1)
+          }}
+        />
         {imgList.map((content, i) => {
           const btnId = "btn_" + i;
           return (
-            <button className='tag_ImgBtn' key={i} id={btnId} value={i} onClick={btnImg}>
-              o
-            </button>
+            <button className='tag_ImgBtn' key={i} id={btnId} value={i} onClick={btnImg} />
           );
         })}
+        <NavigateNext
+          fontSize="small"
+          style={{cursor: 'pointer'}}
+          onClick={() => {
+            const caroTags = document.getElementsByClassName("caroImg")
+            if (count < caroTags.length - 1)
+              setCount(count => count + 1)
+            else if (count === caroTags.length - 1)
+              setCount(count => 0)
+          }}
+        />
       </div>
     </div>
   );

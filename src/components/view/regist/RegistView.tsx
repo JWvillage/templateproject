@@ -49,6 +49,7 @@ const RegistView = () => {
     }
   }, [member.gender])
 
+
   // 성별
   const genSelect = (event: any) => {
     const { value } = event.target;
@@ -61,10 +62,6 @@ const RegistView = () => {
 
   const handleAddress = (dataName: string, dataValue: string) => {
     dataName === 'zoncode' ? setZoneCode(dataValue) : setPostAddress(dataValue)
-  }
-
-  const setAddress = (e: any) => {
-
   }
 
   // 전화번호
@@ -96,6 +93,19 @@ const RegistView = () => {
                   type="text"
                   name='id'
                   placeholder='아이디를 입력하세요'
+                  minLength={6}
+                  maxLength={12}
+                  onBlur={(e) => {
+                    const id_validate = document.getElementById('id_check')
+                    if (id_validate !== null && e.target.value !== null) {
+                      if (e.target.value.length >= 6 && e.target.value.length <= 12) {
+                        id_validate.innerHTML = "사용가능한 아이디 입니다.";
+                        document.getElementsByClassName('sort_img')[0].setAttribute('src', '/static/img/openIcon.png')
+                      } else {
+                        alert('6자리에서 12자리로 입력해주세요!')
+                      }
+                    }
+                  }}
                   onChange={changeMember}
                 />
               </div>
@@ -257,11 +267,11 @@ const RegistView = () => {
               </div>
               <div>
                 <input
-                    className='sort_field'
-                    type="text"
-                    name='email'
-                    placeholder='이메일을 입력하세요'
-                    onChange={changeMember}
+                  className='sort_field'
+                  type="text"
+                  name='email'
+                  placeholder='이메일을 입력하세요'
+                  onChange={changeMember}
                 />
               </div>
               <div>
@@ -333,6 +343,8 @@ const RegistView = () => {
               if (requiredCheck === true) {
                 MemberRegist.instance.memberRegist(member);
                 navigate("/login");
+              } else {
+                alert('필수 입력 값을 모두 입력하세요!')
               }
             }}>
               <GroupAdd />
@@ -343,54 +355,6 @@ const RegistView = () => {
           </div>
         </div>
       </div>
-      {/*<table>*/}
-      {/*  <thead>*/}
-      {/*    <tr>*/}
-      {/*      <th>id</th>*/}
-      {/*      <th>password</th>*/}
-      {/*      <th>name</th>*/}
-      {/*      <th>address</th>*/}
-      {/*    </tr>*/}
-      {/*  </thead>*/}
-      {/*  <tbody>*/}
-      {/*    <tr>*/}
-      {/*      <td>*/}
-      {/*        <input type="text" name="id" onChange={changeMember} />*/}
-      {/*      </td>*/}
-      {/*      <td>*/}
-      {/*        <input type="password" name="password" onChange={changeMember} />*/}
-      {/*      </td>*/}
-      {/*      <td>*/}
-      {/*        <input type="text" name="name" onChange={changeMember} />*/}
-      {/*      </td>*/}
-      {/*      <td>*/}
-      {/*        <input type="text" name="address" onChange={changeMember} />*/}
-      {/*      </td>*/}
-      {/*    </tr>*/}
-      {/*  </tbody>*/}
-      {/*</table>*/}
-      {/*<button*/}
-      {/*  onClick={() => {*/}
-      {/*    MemberRegist.instance.memberRegist(member);*/}
-      {/*    navigate("/login");*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  Regist*/}
-      {/*</button>*/}
-      {/*<button*/}
-      {/*  onClick={() => {*/}
-      {/*    navigate("/login");*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  Login*/}
-      {/*</button>*/}
-      {/*<button*/}
-      {/*  onClick={() => {*/}
-      {/*    navigate("/");*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  Main*/}
-      {/*</button>*/}
     </>
   );
 };
