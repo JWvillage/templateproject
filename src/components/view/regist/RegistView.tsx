@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import MemberRegist from "../../api/member/MemberRegist";
+import { MemberRegist } from "../../api";
 import {TopBar, zipCode} from "../ui";
 import {GroupAdd} from '@mui/icons-material'
 import {Member} from "../../../store";
