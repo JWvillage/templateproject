@@ -15,7 +15,6 @@ import {
 } from "react-router-dom";
 
 function App() {
-  React.useEffect(() => {}, []);
 
   return (
     <BrowserRouter>

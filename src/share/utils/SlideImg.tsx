@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
   NavigateBefore,
   NavigateNext
@@ -9,15 +9,15 @@ interface Props {
 }
 
 const SlideImg: React.FC<Props> = ({ imgList }) => {
-  const [count, setCount] = React.useState(0);
-  const [customInterVal, setCustomInterVal] = React.useState(3000);
+  const [count, setCount] = useState(0);
+  const [customInterVal, setCustomInterVal] = useState(3000);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const c = document.getElementsByTagName("img")[0];
     c.style.display = "flex";
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (customInterVal !== 10000) {
       const transTimer = setInterval(() => {
         if (count < imgList.length - 1) {

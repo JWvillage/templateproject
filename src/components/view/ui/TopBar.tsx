@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   Container,
@@ -16,7 +16,7 @@ const TopBar = () => {
 
   const navigate = useNavigate()
 
-  const [value, setValue] = React.useState(0)
+  const [value, setValue] = useState(0)
 
   const navLink = [
     {label: '입양', href: '/adopt'},

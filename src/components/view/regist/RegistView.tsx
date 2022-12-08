@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { MemberRegist } from "../../api";
+import { MemberLogic } from "../../api";
 import {TopBar, zipCode} from "../ui";
 import {GroupAdd} from '@mui/icons-material'
 import {Member} from "../../../store";
@@ -341,7 +341,7 @@ const RegistView = () => {
             <button className="login_Btn_Icon" onClick={(e) => {
               e.preventDefault();
               if (requiredCheck) {
-                MemberRegist.instance.memberRegist(member);
+                MemberLogic.instance.memberRegist(member);
                 navigate("/login");
               } else {
                 alert('필수 입력 값을 모두 입력하세요!')

@@ -1,5 +1,5 @@
-import React from "react";
-import { MemberLogin } from "../../api";
+import React, {useState} from "react";
+import { MemberLogic } from "../../api";
 import { Main } from "../../view";
 import { useNavigate } from "react-router-dom";
 import { Member } from "../../../store";
@@ -13,7 +13,7 @@ const LoginView = () => {
 
   const m = new Member("", "", "", "", "", "", "", "");
 
-  const [member, setMember] = React.useState(m);
+  const [member, setMember] = useState(m);
 
   const loginHandle = (event: any) => {
     if (event.target.name === "userId") {
@@ -25,10 +25,10 @@ const LoginView = () => {
     setMember({ ...member });
   };
 
-  const [loginSucc, setLoginSucc] = React.useState("");
+  const [loginSucc, setLoginSucc] = useState("");
 
   const loginCheck = () => {
-    const loginMember = MemberLogin.instance.memberLogin(member.id, member.password);
+    const loginMember = MemberLogic.instance.memberLogin(member.id, member.password);
     if (loginMember) {
       setLoginSucc("Succ");
       // setMember(loginMember);

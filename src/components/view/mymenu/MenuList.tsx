@@ -17,7 +17,7 @@ const MenuList = () => {
 
   const navigate = useNavigate()
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [keyVal, setKeyVal] = useState("")
 
   const handleClick = (value: string) => {
